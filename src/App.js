@@ -1,57 +1,9 @@
 import React, { Component } from 'react';
 import reactLogo from './logo.svg';
 import phLogo from './producthunt.svg';
-import {Menu, Container, Input, Item, Loader, Label, Message, Segment} from 'semantic-ui-react';
+import {PhResults } from './PhResults';
+import { Menu, Container, Input, Loader, Segment } from 'semantic-ui-react';
 
-
-function ProductItem(props) {
-  const post = props.post;
-  let postUrl = post.thumbnail.image_url;
-  postUrl = postUrl.substring(0,postUrl.indexOf('?'));
-  const postDate = new Date(post.day)
-  return (
-    <Item>
-      <Item.Image size='tiny' src={postUrl} />
-      <Item.Content>
-        <Item.Header as='a' href={post.discussion_url} target='_blank' >{post.name}</Item.Header>
-        <Item.Meta>{post.tagline}</Item.Meta>
-        <Item.Extra>
-          <Label icon='calendar' content={postDate.toDateString()} />
-          <Label as='a' content='External Link' icon='external square' href={post.redirect_url}/>
-          <Label icon='arrow circle up' content={post.votes_count} />
-          <Label as='a' image href={post.user.profile_url}>
-            <img src={post.user.image_url['30px']} alt='User avatar' />
-            {post.user.name} 
-          </Label>
-        </Item.Extra>
-      </Item.Content>
-    </Item>
-  );
-}
-
-class PhResults extends Component {
-  render() {
-     if(this.props.products == null) {
-      return null;
-    }
-    if(this.props.products.length === 0 && this.props.searchString.length > 0){
-      return (
-          <Message error icon='inbox' size='massive'>Sorry no results for {this.props.searchString}</Message>
-        ); 
-    }
-    const items = this.props.products.map((post,index)=> {
-      return (
-        <ProductItem post={post} key={post.id}/>
-      );
-    });
-
-    return (
-        <Item.Group divided>
-          {items}
-        </Item.Group>
-    );
-  }
-}
 
 export default class App extends Component {
 
@@ -62,10 +14,9 @@ export default class App extends Component {
       filtered: null,
       searching: true,
       searchString: '',
-      accessToken: 'b1eaf7ef066b5d22d3c82c1fe5062077e86d2184b7ca6b22b98f22dbe085c63b'
+      accessToken: 'a5d29aef6aa58697eb97035653a259a12ea59f998afccf30062d4571eb909735'
     }
     this.handleChange = this.handleChange.bind(this);
-    // this.handleSearchClick = this.handleSearchClick.bind(this);
   }
 
   componentDidMount() {
@@ -111,11 +62,6 @@ export default class App extends Component {
     this.getFilteredResults(event.target.value);
   }
 
-  // handleSearchClick() {
-  //   this.setState({searching:true});
-  //   this.getFilteredResults();
-  // }
-
   render() {
     return (
       <div>
@@ -130,8 +76,8 @@ export default class App extends Component {
           </Menu>
           <Container text>
             <Input fluid onChange={this.handleChange}
+                loading={this.state.searching}
                 icon='search'
-                // {<Icon name='search' inverted circular link onClick={this.handleSearchClick} />}
                 placeholder='Type to filter'
               />
             <Loader size='massive' inline='centered' active={this.state.searching} style={{'marginTop': '0.3em'}}>Loading! Please Wait . . .</Loader>
