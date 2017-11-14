@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Item, Label, Message} from 'semantic-ui-react';
+import {Item, Label, Message, Popup, Button} from 'semantic-ui-react';
 
 function ProductItem(props) {
   const post = props.post;
@@ -8,13 +8,19 @@ function ProductItem(props) {
   const postDate = new Date(post.day)
   return (
     <Item>
-      <Item.Image size='tiny' src={postUrl} />
-      <Item.Content>
+      <Item.Image size='tiny' src={postUrl}  as='a' href={post.discussion_url} target='_blank'/>
+      <Item.Content>  
         <Item.Header as='a' href={post.discussion_url} target='_blank' >{post.name}</Item.Header>
         <Item.Meta>{post.tagline}</Item.Meta>
         <Item.Extra>
           <Label icon='calendar' content={postDate.toDateString()} />
-          <Label as='a' content='External Link' icon='external square' href={post.redirect_url}/>
+          <Popup
+            trigger={<Button as='a' target='_blank' href={post.redirect_url} size='mini' icon='external square' />}
+            content='Go to external URL'
+            size='tiny'
+            position='bottom center'
+            basic
+          />
           <Label icon='arrow circle up' content={post.votes_count} />
           <Label as='a' image href={post.user.profile_url}>
             <img src={post.user.image_url['30px']} alt='User avatar' />
