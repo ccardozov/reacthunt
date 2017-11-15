@@ -3,6 +3,7 @@ import reactLogo from './logo.svg';
 import phLogo from './producthunt.svg';
 import { PhResults } from './PhResults';
 import { FiltersMenu } from './FiltersMenu';
+import { sortByFilterType } from './Utils';
 import { Menu, Container, Grid, Loader, Rail, Segment } from 'semantic-ui-react';
 
 
@@ -15,19 +16,13 @@ export default class App extends Component {
       filtered: null,
       searching: true,
       searchString: '',
-      filter: 'none',
-      order: 'desc',
-      accessToken: 'a5d29aef6aa58697eb97035653a259a12ea59f998afccf30062d4571eb909735'
     }
     this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
-    // let fetchUrl = 'https://api.producthunt.com/v1/posts/all?access_token='+this.state.accessToken;
-    // const searchString = this.state.searchString;
-    // if(searchString !== ''){
-    //   fetchUrl += '&search='+searchString; 
-    // }
+    //const accessToken = 'a5d29aef6aa58697eb97035653a259a12ea59f998afccf30062d4571eb909735'
+    // const fetchUrl = 'https://api.producthunt.com/v1/posts/all?access_token='+accessToken;
     // fetch(fetchUrl)
     //   .then(response => {
     //     if(response.ok) {
@@ -47,29 +42,40 @@ export default class App extends Component {
     this.setState({products: dummy, searching: false});
   }
 
-  getFilteredResults(searchString){
-    if(searchString === '') {
-      this.setState({ filtered: null, searching: false});
-    } else {
-      let filtered = [];
+  getFilteredResults(data){
+    let searchString = data.searchString;
+    let filteredPosts = [];
+    if(searchString !== '') {
       for(let post of this.state.products) {
         if(post.name.toLowerCase().includes(searchString.toLowerCase()) || post.tagline.toLowerCase().includes(searchString.toLowerCase())){
-          filtered.push(post);
+          filteredPosts.push(post);
         }
       }
-      this.setState({filtered: filtered, searching: false});
+      if(filteredPosts.length) {
+        if(data.filter !== 'none'){
+          filteredPosts.sort(sortByFilterType(data.filter,data.order));
+        }
+      } else {
+        filteredPosts = null;
+      }
+    } else if(data.filter !== 'none') {
+      filteredPosts = this.state.products.slice();
+      filteredPosts.sort(sortByFilterType(data.filter,data.order));
+    } else {
+      filteredPosts = null;
     }
+
+    this.setState({filtered: filteredPosts, searching: false});
   }
 
-  handleChange(e,data){
-    console.log("handleChangeApp "+data.searchString+' '+data.filter+' '+data.order);
-    this.setState({
-      searchString:data.searchString,
-      filter: data.filter,
-      order: data.order,
-      searching: true
-    });
-    this.getFilteredResults(data.searchString);
+  handleChange(data){
+    if(data.searchString === '') { //just to avoid unnecesary setState calls
+      this.setState({
+        searchString: data.searchString,
+        searching: true
+      });
+    }
+    this.getFilteredResults(data);
   }
 
   render() {
