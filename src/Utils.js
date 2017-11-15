@@ -4,7 +4,6 @@ export function sortByFilterType(filter,order) {
       return (order === 'asc' ? a.votes_count - b.votes_count : b.votes_count - a.votes_count);
     }
   } else {
-
     return function(a,b) {
       var valA = null;
       var valB = null;
@@ -16,7 +15,7 @@ export function sortByFilterType(filter,order) {
         valB = b.name.toUpperCase(); 
       } else if(filter === 'date') {
         valA = Date.parse(a.created_at);
-        valB = Date.parse(a.created_at);
+        valB = Date.parse(b.created_at);
       }
       if (valA < valB) {
         return (order === 'asc'? -1 : 1);

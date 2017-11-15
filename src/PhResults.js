@@ -44,7 +44,7 @@ export class PhResults extends Component {
       return (
         <Message
           icon='info'
-          header={'Sorry no results for: '+ this.props.searchString }
+          header={'Sorry no results for: ' + this.props.searchString }
           content='The string you searched returned 0 results'
         />
         ); 
