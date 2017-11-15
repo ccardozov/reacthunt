@@ -6,23 +6,23 @@ export function sortByFilterType(filter,order) {
   } else {
 
     return function(a,b) {
-      let valA = null;
-      let valB = null;
+      var valA = null;
+      var valB = null;
       if(filter === 'username') {
         valA = a.user.name.toUpperCase(); 
         valB = b.user.name.toUpperCase();
       } else if(filter === 'product') {
-        valA = a.tagline.toUpperCase(); 
-        valB = b.tagline.toUpperCase(); 
-      } else if(filter === 'data') {
-        valA = new Date(a.created_at);
-        valB = new Date(a.created_at);
+        valA = a.name.toUpperCase(); 
+        valB = b.name.toUpperCase(); 
+      } else if(filter === 'date') {
+        valA = Date.parse(a.created_at);
+        valB = Date.parse(a.created_at);
       }
       if (valA < valB) {
-        return (order === 'asc'? -1:  1);
+        return (order === 'asc'? -1 : 1);
       }
       if (valA > valB) {
-        return (order === 'asc'? 1:  -1);
+        return (order === 'asc'? 1 : -1);
       }
       //must be equal
       return 0;
