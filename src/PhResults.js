@@ -42,7 +42,11 @@ export class PhResults extends Component {
     }
     if(this.props.products.length === 0 && this.props.searchString.length > 0){
       return (
-          <Message error icon='inbox' size='massive'>Sorry no results for {this.props.searchString}</Message>
+        <Message
+          icon='info'
+          header={'Sorry no results for: '+ this.props.searchString }
+          content='The string you searched returned 0 results'
+        />
         ); 
     }
     const items = this.props.products.map((post,index)=> {

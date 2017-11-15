@@ -56,21 +56,20 @@ export default class App extends Component {
         if(data.filter !== 'none'){
           filteredPosts.sort(sortByFilterType(data.filter,data.order));
         }
-      } else {
+      } /*else {
         filteredPosts = null;
-      }
+      }*/
     } else if(data.filter !== 'none') {
       filteredPosts = this.state.products.slice();
       filteredPosts.sort(sortByFilterType(data.filter,data.order));
     } else {
       filteredPosts = null;
     }
-
     this.setState({filtered: filteredPosts, searching: false});
   }
 
   handleChange(data){
-    if(data.searchString === '') { //just to avoid unnecesary setState calls
+    if(data.searchString !== '') { //just to avoid unnecesary setState calls
       this.setState({
         searchString: data.searchString,
         searching: true
