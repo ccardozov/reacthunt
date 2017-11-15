@@ -7,7 +7,7 @@ export class FiltersMenu extends Component{
 		this.state = {
 			filter: 'none',
 			order: 'desc',
-			searchString: ''
+			searchString: '',
 		}
 		this.handleChange = this.handleChange.bind(this);
 	}
@@ -42,27 +42,29 @@ export class FiltersMenu extends Component{
 		const filter = this.state.filter;
 		const order = this.state.order;
 		return (
-			<div>
-				<Header as='h5' attached='top'>
-		      Filters
-		    </Header>
-		    <Segment attached>
-		      <Input fluid onChange={this.handleChange}
-	          name='word'
-	          icon='search'
-	          placeholder='Type to filter'
-	        />
-		    </Segment>
-		    <Header as='h5' attached>Sort by</Header>
-		    <Segment attached>
-		    	<Item.Group divided>
-		      <Item><Checkbox name='votes' label='Votes' checked={filter === 'votes'} toggle onChange={this.handleChange}/></Item>
-		      <Item><Checkbox name='username' label='Username' checked={filter === 'username'} toggle onChange={this.handleChange}/></Item>
-		      <Item><Checkbox name='product' label='Product Name' checked={filter === 'product'} toggle onChange={this.handleChange} /></Item>
-		      <Item><Checkbox name='date' label='Date posted' checked={filter === 'date'} toggle onChange={this.handleChange}/></Item>
-		      <Item><Checkbox name='order' checked={order === 'asc'} disabled={filter === 'none'} label='Descending/Ascending' slider onChange={this.handleChange}/></Item>
-		      </Item.Group>
-		    </Segment>
+			<div> 
+				<Segment raised>
+					<Header as='h5' attached='top'>
+			      Filters
+			    </Header>
+			    <Segment attached>
+			      <Input fluid onChange={this.handleChange}
+		          name='word'
+		          icon='search'
+		          placeholder='Type to filter'
+		        />
+			    </Segment>
+			    <Header as='h5' attached>Sort by</Header>
+			    <Segment attached>
+			    	<Item.Group divided>
+			      <Item><Checkbox name='votes' label='Votes' checked={filter === 'votes'} toggle onChange={this.handleChange}/></Item>
+			      <Item><Checkbox name='username' label='Username' checked={filter === 'username'} toggle onChange={this.handleChange}/></Item>
+			      <Item><Checkbox name='product' label='Product Name' checked={filter === 'product'} toggle onChange={this.handleChange} /></Item>
+			      <Item><Checkbox name='date' label='Date posted' checked={filter === 'date'} toggle onChange={this.handleChange}/></Item>
+			      <Item><Checkbox name='order' checked={order === 'asc'} disabled={filter === 'none'} label='Desc/Asc' slider onChange={this.handleChange}/></Item>
+			      </Item.Group>
+			    </Segment>
+		   	</Segment>
 	    </div>
 		);
 	}

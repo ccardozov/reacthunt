@@ -8,10 +8,16 @@ function ProductItem(props) {
   const postDate = new Date(post.day)
   return (
     <Item>
-      <Item.Image size='tiny' src={postUrl}  as='a' href={post.discussion_url} target='_blank'/>
-      <Item.Content>  
+      <Item.Image size='small' src={postUrl}  />
+      <Item.Content  verticalAlign='top'>
         <Item.Header as='a' href={post.discussion_url} target='_blank' >{post.name}</Item.Header>
         <Item.Meta>{post.tagline}</Item.Meta>
+        <Item.Extra> 
+          <Label as='a' image href={post.user.profile_url} floated='right'>
+            <img src={post.user.image_url['30px']} alt='User avatar' />
+            {post.user.name} 
+          </Label>
+        </Item.Extra>
         <Item.Extra>
           <Label icon='calendar' content={postDate.toDateString()} />
           <Popup
@@ -22,10 +28,7 @@ function ProductItem(props) {
             basic
           />
           <Label icon='arrow circle up' content={post.votes_count} />
-          <Label as='a' image href={post.user.profile_url}>
-            <img src={post.user.image_url['30px']} alt='User avatar' />
-            {post.user.name} 
-          </Label>
+         
         </Item.Extra>
       </Item.Content>
     </Item>
