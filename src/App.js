@@ -15,6 +15,8 @@ export default class App extends Component {
       filtered: null,
       searching: true,
       searchString: '',
+      filter: 'none',
+      order: 'desc',
       accessToken: 'a5d29aef6aa58697eb97035653a259a12ea59f998afccf30062d4571eb909735'
     }
     this.handleChange = this.handleChange.bind(this);
@@ -59,12 +61,15 @@ export default class App extends Component {
     }
   }
 
-  handleChange(filter){
+  handleChange(e,data){
+    console.log("handleChangeApp "+data.searchString+' '+data.filter+' '+data.order);
     this.setState({
-      searchString:filter,
+      searchString:data.searchString,
+      filter: data.filter,
+      order: data.order,
       searching: true
     });
-    this.getFilteredResults(filter);
+    this.getFilteredResults(data.searchString);
   }
 
   render() {

@@ -1,24 +1,43 @@
 import React, {Component} from 'react';
-import { Radio, Checkbox, Header, Segment, Input, Item} from 'semantic-ui-react';
+import { Checkbox, Header, Segment, Input, Item} from 'semantic-ui-react';
 
 export class FiltersMenu extends Component{
 	constructor(props){
 		super(props);
-		this.onChange = this.onChange.bind(this);
+		this.state = {
+			filter: 'none',
+		}
+		this.handleChange = this.handleChange.bind(this);
 	}
 
-	onChange(filter,e){
-		console.log(e.target);
-		console.log(filter);
+	handleChange(e,data){
+		if(data.name !== 'order'){
+			if(data.checked){
+				data['filter'] = data.name;
+				this.setState({
+					filter: data.name
+				});		
+			} else{
+				data['filter'] = 'none';
+				this.setState({
+					filter: 'none'
+				});
+			}
+		}
+		console.log(data);
+		//this.props.onChange(data);
 	}
+
 	render(){
+		const filter = this.state.filter;
 		return (
 			<div>
 				<Header as='h5' attached='top'>
 		      Filters
 		    </Header>
 		    <Segment attached>
-		      <Input fluid onChange={this.onChange('word')}
+		      <Input fluid onChange={this.handleChange}
+	          name='word'
 	          icon='search'
 	          placeholder='Type to filter'
 	        />
@@ -28,11 +47,11 @@ export class FiltersMenu extends Component{
 		    </Header>
 		    <Segment attached>
 		    	<Item.Group divided>
-		      <Item><Checkbox label='Votes' toggle onChange={(e)=>{this.onChange('votes',e)}}/></Item>
-		      <Item><Checkbox label='Username' toggle onChange={this.onChange('username')}/></Item>
-		      <Item><Checkbox label='Product Name' toggle onChange={this.onChange('product')} /></Item>
-		      <Item><Checkbox label='Date posted' toggle onChange={this.onChange('date')}/></Item>
-		      <Item><Radio label='Descending/Ascending' slider /></Item>
+		      <Item><Checkbox name='votes' label='Votes' checked={filter === 'votes'} toggle onChange={this.handleChange}/></Item>
+		      <Item><Checkbox name='username' label='Username' checked={filter === 'username'} toggle onChange={this.handleChange}/></Item>
+		      <Item><Checkbox name='product' label='Product Name' checked={filter === 'product'} toggle onChange={this.handleChange} /></Item>
+		      <Item><Checkbox name='date' label='Date posted' checked={filter === 'date'} toggle onChange={this.handleChange}/></Item>
+		      <Item><Checkbox name='order' disabled={filter === 'none' ? true : false} label='Descending/Ascending' slider onChange={this.handleChange}/></Item>
 		      </Item.Group>
 		    </Segment>
 	    </div>
