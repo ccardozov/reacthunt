@@ -6,7 +6,8 @@
     "react": "^16.1.0",
     "react-dom": "^16.1.2",
     "react-scripts": "3.4.1",
-    "semantic-ui-react": "^1.1.0",
+    "semantic-ui-css": "^2.4.1",
+    "semantic-ui-react": "^1.1.1",
     "yarn": "^1.3.2"
   },
   "scripts": {
@@ -15,5 +16,17 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "start:dev": "webpack-dev-server"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
